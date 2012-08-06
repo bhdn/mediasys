@@ -1,0 +1,24 @@
+#!/usr/bin/python
+import sys
+from mediasys.command import MediasysCommand, CliError
+
+DESCR = """\
+Creates the directory structure used by a repository
+"""
+
+class Init(MediasysCommand):
+
+    usage = "%prog [-d DISTRO]"
+    descr = DESCR
+
+    def init_parser(self, parser):
+        MediasysCommand.init_parser(self, parser)
+        parser.add_option("-d", "--distro", type="str", default=None,
+                help="target distribution")
+
+    def run(self):
+        self.mediasys.init(self.opts.distro)
+
+Init().main()
+
+# vim:ts=4:sw=4:et

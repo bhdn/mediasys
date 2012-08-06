@@ -1,0 +1,31 @@
+=======================
+A tour through mediasys
+=======================
+
+(An informal test-case)
+
+Putting packages into a repository
+-----------------------------------
+
+::
+ $ ls
+ SOURCES/ SPECS/
+ $ bm -ba
+ creating package list
+ processing package bm-2.1-%mkrel 223
+ building source and binary packages
+ succeeded!
+ $ ls RPMS/noarch/
+ bm-2.1-223mdv2011.0.noarch.rpm
+ $ ls SRPMS/
+ bm-2.1-223mdv2011.0.src.rpm
+ $ mediasys-put -d 2010.0 -m main/release $PWD
+ error: you have no permission to upload to 2010.0 main/release
+ $ mediasys-put -d 2010.0 -m main/updates $PWD
+ error: you have no permission to upload to 2010.0 main/updates
+ $ mediasys-put -d 2010.0 -m main/backports $PWD
+ error: there is a newer package in the repository metadata
+ $ mediasys-put -d 2010.0 -m main/backports $PWD
+ error: there is a newer package in the repository metadata
+
+.. vim:ft=rst:ai

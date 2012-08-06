@@ -1,0 +1,11 @@
+#!/usr/bin/python
+from mediasys.command import MediasysCommand
+
+class Showrc(MediasysCommand):
+
+    descr = "Dumps configuration values"
+
+    def run(self):
+        print repr(self.config)
+
+Showrc().main()

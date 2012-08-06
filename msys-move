@@ -1,0 +1,36 @@
+#!/usr/bin/python
+# vim:ts=4:sw=4:et
+import sys
+from mediasys.command import MediasysCommand, CliError
+
+DESCR = """\
+Moves a given source package and its binaries from one media to another.
+"""
+
+class Move(MediasysCommand):
+
+    usage = "%prog -d DISTRO --from MEDIA --to MEDIA SOURCENAME"
+    descr = DESCR
+
+    def init_parser(self, parser):
+        MediasysCommand.init_parser(self, parser)
+        parser.add_option("-d", "--distro", type="str", default=None,
+                help="target distribution")
+        parser.add_option("-f", "--from", type="str", default=None,
+                dest="from_",
+                help="source media")
+        parser.add_option("-t", "--to", type="str", default=None,
+                help="target media")
+
+    def run(self):
+        if not self.args:
+            raise CliError("no source package name provided (--help?)")
+        if not (self.opts.from_ and self.opts.to):
+            raise CliError("both --from and --to are required (--help?)")
+        for name in self.args:
+            self.mediasys.move(name, distro=self.opts.distro,
+                    frommedia=self.opts.from_, tomedia=self.opts.to)
+
+Move().main()
+
+# vim:ts=4:sw=4:et

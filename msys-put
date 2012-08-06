@@ -1,0 +1,29 @@
+#!/usr/bin/python
+import sys
+from mediasys.command import MediasysCommand, CliError
+
+DESCR = """\
+Copy a set of packages to a given destination media.
+"""
+
+class Put(MediasysCommand):
+
+    usage = "%prog -d DISTRO [-m MEDIA] file.src.rpm..."
+    descr = DESCR
+
+    def init_parser(self, parser):
+        MediasysCommand.init_parser(self, parser)
+        parser.add_option("-r", "--root", type="str", default=None,
+                help="set the root directory of the repository")
+        parser.add_option("-d", "--distro", type="str", default=None,
+                help="target distribution")
+        parser.add_option("-m", "--media", type="str", default=None,
+                help="target media")
+
+    def run(self):
+        self.mediasys.put(self.args, distro=self.opts.distro,
+                media=self.opts.media, root=self.opts.root)
+
+Put().main()
+
+# vim:ts=4:sw=4:et
